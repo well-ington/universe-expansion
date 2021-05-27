@@ -1,5 +1,5 @@
 
-const arraySampleReducer = (map: Map<string, number[]>, reduceTo: number, profileToGet: number = 1): Map<string, number[]> => {
+const mapSampleReducer = (map: Map<string, number[]>, reduceTo: number, profileToGet: number = 1): Map<string, number[]> => {
     const reducedObject: Map<string, number[]> = new Map();
     let reduceProportion = 0;
     map.forEach((value: number[], key: string) => {
@@ -17,4 +17,4 @@ const arraySampleReducer = (map: Map<string, number[]>, reduceTo: number, profil
     return reducedObject;
 }
 
-export default arraySampleReducer;
+export default mapSampleReducer;
