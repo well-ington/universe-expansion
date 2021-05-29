@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    padding: 4px 8px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: 250ms;
+
+    & input, p {
+        text-align: center;
+        margin: 4px;
+    }
+
+    & p {
+        font-size: 16px;
+    }
+
+    & input {
+        margin-bottom: 8px;
+        
+        font-size: 14px;
+    }
+}
+
+.hide {
+    transform: translate(-150%, 0);
+}
+
+.hideable {
+    background-color: hsl(255, 50%, 90%);
+    transition: 250ms;
+    text-align: center;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.show {
+    bottom: 0;
+    left: 0;
+}
+
+.floatButton {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
