@@ -1,0 +1,20 @@
+.container {
+    border-radius: 50px;
+    font-size: 18px;
+    padding: 8px 12px;
+    text-transform: uppercase;
+    font-family: 'Roboto mono';
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    margin: 4px;
+    color: white;
+    letter-spacing: 2px;
+    background-color: hsl(255, 100%, 55%);
+    transition: 250ms;
+    cursor: pointer;
+
+    &:hover {
+        background-color: hsl(245, 100%, 70%);
+    }
+}
