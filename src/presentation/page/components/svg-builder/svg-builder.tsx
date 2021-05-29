@@ -4,16 +4,23 @@ import PolygonBuilder from "../polygon-builder/polygon-builder";
 
 const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, scale }) => {
     const bgColors = ["gold", "cyan", "black", "black", "hsl(285, 90%, 50%)",  "hsl(255, 90%, 50%)", "blue"];
-    const expansionProfile = [0, 375, 37500, 400000, 670000, 9800000, 13500000];
-    const calculatedTime = prop.time[prop.time.length - 1] * 100;
-    const polygonSectionHeight = 100;
+    const expansionProfile = [0, 0.375, 375, 4000, 6700, 98000, 135000];
+    const calculatedTime = prop.time[prop.time.length - 1];
+    const polygonSectionHeight = window.innerHeight / 3;
     const universeProportions = (1/prop.scale[prop.scale.length - 1]);
     const universeSizeOffset = universeProportions * polygonSectionHeight;
     const lineArray = [];
     for (let i = 0; i < Math.floor(polygonSectionHeight/universeSizeOffset); i++) {
         lineArray.push(universeSizeOffset * (i+1));
     }
-    // console.log(universeSizeOffset, Math.floor(polygonSectionHeight/universeSizeOffset), lineArray);
+
+    if(lineArray.length < 2) {
+        const test = (universeSizeOffset % polygonSectionHeight)/(4 * universeProportions);
+        lineArray.push(test);
+        lineArray.push(test * 2);
+        lineArray.push(test * 3);
+    }
+
     const myMap = new Map();
     myMap.set("proportion", lineArray);
 
@@ -26,18 +33,18 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
                 (profile, index) => <stop key={"color" + index} offset={`${(profile/calculatedTime) * 100}%`} stopColor={bgColors[index]} />)}
             </linearGradient>
         </defs>
-        <PolygonBuilder height={polygonSectionHeight} width={window.innerWidth * 0.9} time={prop.time} scale={prop.scale} fill={"url('#evolutionGradient')"}></PolygonBuilder>
+        <PolygonBuilder height={polygonSectionHeight} width={window.innerWidth} time={prop.time} scale={prop.scale} fill={"url('#evolutionGradient')"}></PolygonBuilder>
 
         {
-            resultingArray.get("proportion").map((pos) => <line x1="0" x2={window.innerWidth * 0.9} y1={polygonSectionHeight - pos} y2={polygonSectionHeight - pos} stroke="green" />)
+            resultingArray.get("proportion").map((pos) => <line x1="0" x2={window.innerWidth} y1={polygonSectionHeight - pos} y2={polygonSectionHeight - pos} stroke="green" />)
         }
 
         {
 
-            resultingArray.get("proportion").map((pos) => <text y={polygonSectionHeight - pos } x={150}>{Math.floor(pos/universeSizeOffset)} * universe size</text>)
+            resultingArray.get("proportion").map((pos) => <text y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{Math.floor((pos/universeSizeOffset) * 100)} % universe size</text>)
         }
         {/* <line x1="0" x2={window.innerWidth * 0.9} y1={polygonSectionHeight - universeSizeOffset} y2={polygonSectionHeight - universeSizeOffset} stroke="green" /> */}
-        <line x1="0" x2={window.innerWidth * 0.9} y1={polygonSectionHeight + universeSizeOffset} y2={polygonSectionHeight + universeSizeOffset} stroke="green" />
+        {/* <line x1="0" x2={window.innerWidth * 0.9} y1={polygonSectionHeight + universeSizeOffset} y2={polygonSectionHeight + universeSizeOffset} stroke="green" /> */}
     </svg>
 }
 
