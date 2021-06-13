@@ -5,8 +5,8 @@ import UniverseDisplay from "./components/universe-display/universe-display";
 const Home: React.FC = () => {
     const [parameters, setUniverseParameters] = React.useState({
             initialTime: 0,
-            finalTime: 13500,
-            radiationDensity: 0.01,
+            finalTime: 13.5,
+            radiationDensity: 0.001,
             matterDensity: 0.25,
             darkEnergyDensity: 0.75,
             metricDensity: 1.001,

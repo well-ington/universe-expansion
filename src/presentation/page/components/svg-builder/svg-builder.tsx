@@ -43,8 +43,7 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
 
             resultingArray.get("proportion").map((pos) => <text y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{Math.floor((pos/universeSizeOffset) * 100)} % universe size</text>)
         }
-        {/* <line x1="0" x2={window.innerWidth * 0.9} y1={polygonSectionHeight - universeSizeOffset} y2={polygonSectionHeight - universeSizeOffset} stroke="green" /> */}
-        {/* <line x1="0" x2={window.innerWidth * 0.9} y1={polygonSectionHeight + universeSizeOffset} y2={polygonSectionHeight + universeSizeOffset} stroke="green" /> */}
+        
     </svg>
 }
 

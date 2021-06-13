@@ -1,41 +1,26 @@
 .container {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
-    align-items: center;
-    
-    padding: 4px 8px;
-    position: absolute;
+    align-items: flex-start;
+    // padding: 4px 8px;
+    position: fixed;
     bottom: 0;
-    left: 0;
+    // left: 50%;
+    // transform: translate(-50%, 0);
     transition: 250ms;
-
-    & input, p {
-        text-align: center;
-        margin: 4px;
-    }
-
-    & p {
-        font-size: 16px;
-    }
-
-    & input {
-        margin-bottom: 8px;
-        
-        font-size: 14px;
-    }
+    width: 100vw;
 }
 
 .hide {
-    transform: translate(-150%, 0);
+    transform: translate(0, 120%);
 }
 
 .hideable {
-    background-color: hsl(255, 50%, 90%);
+    // background-color: hsl(255, 50%, 90%);
     transition: 250ms;
     text-align: center;
-    border-radius: 12px;
-    padding: 8px;
+    // border-radius: 12px;
 }
 
 .show {
@@ -47,4 +32,84 @@
     position: absolute;
     bottom: 15px;
     left: 15px;
+}
+
+.numberName {
+    color: #000000dd;
+    font-size: 1.4em;
+}
+
+.numberInput {
+    color: #000000dd;
+}
+
+.numberLabel {
+    color: #000000dd;
+    // background-color: green;
+    font-size:1.2em;
+}
+
+.numberContainer:first-child {
+    // border-top-left-radius: 0.8rem;
+    // border-top-right-radius: 0.8rem;
+    // padding-top: 1.2rem;    
+    // border-top: 3px solid hsl(255, 50%, 50%, 70%);
+}
+
+.numberContainer {
+    // background-color: darkorange;
+    padding: 0.8rem;
+    // border-left: 1px solid hsl(255, 90%, 80%, 70%);
+    // border-right: 1px solid hsl(255, 90%, 80%, 70%);
+}
+
+.numberContainer:last-child {
+    // background-color: darkorange;
+    // padding: 1.8rem;
+    // border-left: 1px solid hsl(255, 90%, 80%, 70%);
+    // border-right: 1px solid hsl(255, 90%, 80%, 70%);
+}
+
+.finalTimeContainer, .buttonContainer {
+    // background-color: hsl(255, 90%, 80%);
+}
+.buttonContainer {
+    // border-bottom-left-radius: 1.6rem;
+    // border-bottom-right-radius: 1.6rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+    text-align: center;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.427);
+    border-width: 1px;
+}
+.inputForm {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+@media (min-width: 992px) {
+    .inputForm {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 991px) {
+    .inputForm {
+        // display: flex;
+        // flex-direction: column;
+    }
 }
