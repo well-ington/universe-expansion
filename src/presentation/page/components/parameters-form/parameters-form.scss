@@ -98,13 +98,13 @@ input[type=number] {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
-    background-color: #00000005;
+    background-color: #fefefe;
     border-radius: 1.6rem;
     padding: 0.4rem;
     box-shadow: 0.1rem 0.1rem 0.4rem #00000022;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 851px) {
     .inputForm {
         display: flex;
         flex-direction: row;
@@ -112,10 +112,10 @@ input[type=number] {
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 850px) {
     .inputForm {
-        // display: flex;
-        // flex-direction: column;
+        display: flex;
+        flex-direction: column;
     }
 }
 @keyframes pop-in {

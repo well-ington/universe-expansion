@@ -9,22 +9,51 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
     const polygonSectionHeight = window.innerHeight / 3;
     const universeProportions = (1/prop.scale[prop.scale.length - 1]);
     const universeSizeOffset = universeProportions * polygonSectionHeight;
-    const lineArray = [];
-    for (let i = 0; i < Math.floor(polygonSectionHeight/universeSizeOffset); i++) {
-        lineArray.push(universeSizeOffset * (i+1));
+    const pickLastVal = Number([...prop.scale].sort((a,b) => a > b ? -1 : 1)[0]);
+    // console.log(pickLastVal, prop.scale);
+    const [lastValue, setLastValue] = React.useState(pickLastVal);
+    
+    const buildUniverseProportionArray = () => {
+        const resultingArray = [];
+        for (let i = 0; i < Math.floor(polygonSectionHeight/universeSizeOffset); i++) {
+            resultingArray.push(universeSizeOffset * (i+1));
+        }
+        if(resultingArray.length < 2) {
+            const slicedUniverseSize = polygonSectionHeight / 4;
+            resultingArray.push(slicedUniverseSize);
+            resultingArray.push(slicedUniverseSize * 2);
+            resultingArray.push(slicedUniverseSize * 3);
+            if(resultingArray.length < 4) {
+                resultingArray.push(slicedUniverseSize * 4);
+            }
+        }
+        return resultingArray;
     }
+    const lineArray = React.useMemo(() => buildUniverseProportionArray(), [polygonSectionHeight, universeSizeOffset]);
 
-    if(lineArray.length < 2) {
-        const test = (universeSizeOffset % polygonSectionHeight)/(4 * universeProportions);
-        lineArray.push(test);
-        lineArray.push(test * 2);
-        lineArray.push(test * 3);
-    }
+    const proportionComponentConstructor = () => lineArray.map((pos) => <text y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{Math.floor((pos/universeSizeOffset) * 100)}% do tamanho do nosso Universo hoje</text>);
 
-    const myMap = new Map();
-    myMap.set("proportion", lineArray);
+    const [memoTextLineArray, updateMemoTextLineArray] = React.useState(proportionComponentConstructor());
 
-    const resultingArray = mapSampleReducer(myMap, Math.min(3, lineArray.length));
+    React.useEffect(() => {
+        if(pickLastVal !== lastValue) { 
+            // console.log(pickLastVal, lastValue)
+            updateMemoTextLineArray(proportionComponentConstructor());
+            setLastValue(lastValue);
+        }
+    }, [pickLastVal])
+
+    const memoLineArray = React.useMemo(() => lineArray.map((pos) => <line x1="0" x2={window.innerWidth} y1={polygonSectionHeight - pos} 
+    y2={polygonSectionHeight - pos} stroke={"hsl(155, 50%, 50%)"} stroke-width="2" />), [lineArray]);
+
+
+    const timeMap = new Map();
+    timeMap.set("time", prop.time);
+    const lastTime = prop.time[prop.time.length - 1];
+
+    const reducedTimeMap = mapSampleReducer(timeMap, 10);
+    console.log(reducedTimeMap, prop.time, );
+
     return <svg viewBox={`0 0 ${window.innerWidth} ${polygonSectionHeight * 2.1}`}>
         <defs>
             <linearGradient id="evolutionGradient">
@@ -36,12 +65,25 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
         <PolygonBuilder height={polygonSectionHeight} width={window.innerWidth} time={prop.time} scale={prop.scale} fill={"url('#evolutionGradient')"}></PolygonBuilder>
 
         {
-            resultingArray.get("proportion").map((pos) => <line x1="0" x2={window.innerWidth} y1={polygonSectionHeight - pos} y2={polygonSectionHeight - pos} stroke="green" />)
+        memoLineArray
         }
 
         {
+        memoTextLineArray
+        }
 
-            resultingArray.get("proportion").map((pos) => <text y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{Math.floor((pos/universeSizeOffset) * 100)} % universe size</text>)
+        {
+            reducedTimeMap.get("time").map(pos => <line 
+                x1={window.innerWidth * pos / lastTime} 
+                x2={window.innerWidth * pos / lastTime} 
+                y1={polygonSectionHeight} 
+                y2={polygonSectionHeight * 2} stroke-width={2} stroke="hsl(155, 50%, 50%)"></line>)
+        }
+
+        {
+            reducedTimeMap.get("time").map(pos => <text x={window.innerWidth * pos / lastTime} y={(polygonSectionHeight * 2) + 16}>
+                {(pos/1000).toFixed(3)} {pos > 2000 ? "bilhões" : "bilhão"}
+            </text>)
         }
         
     </svg>
