@@ -10,10 +10,10 @@ const ParametersForm: React.FC<{
   const [hide, setHide] = React.useState(false);
 
   const densityParameters = [
-    { name: "Radiation density", namePTBR: "Radioativa", label: "relativa",  step: 0.001 },
-    { name: "Matter density", namePTBR: "Matéria", label: "relativa",  step: 0.01 },
-    { name: "Dark energy density", namePTBR: "Energia escura", label: "relativa",  step: 0.01 },
-    { name: "Metric density", namePTBR: "Métrica", label: "relativa",  step: 0.001 },
+    { name: "Radiation density", namePTBR: "radioativa", label: "unidade relativa",  step: 0.001 },
+    { name: "Matter density", namePTBR: "de matéria", label: "unidade relativa",  step: 0.01 },
+    { name: "Dark energy density", namePTBR: "de energia escura", label: "unidade relativa",  step: 0.01 },
+    { name: "Metric density", namePTBR: "métrica", label: "unidade relativa",  step: 0.001 },
     { name: "Final time", namePTBR: "Tempo final", label: "em bilhões de anos",  step: 0.25 },
   ];
   return (
@@ -42,6 +42,10 @@ const ParametersForm: React.FC<{
                   }
                   }
                 />
+                <p style={{
+                  fontSize: "1.2rem",
+                  color: "#000000bb"
+                }}>{isLastItem ? <span>⏳</span> : 'Densidade'}</p>
                 <p className={styles.numberName}>{profile.namePTBR}</p>
                 <p className={styles.numberLabel}>
                     {profile.label}
@@ -50,15 +54,14 @@ const ParametersForm: React.FC<{
             );
           })}          
           </div>
-          <div className={styles.buttonContainer}>
-              
+          <div className={styles.buttonContainer}>              
               <Button action={submit}>Calcular</Button>
               </div>
         </div>
 
-        <div className={`${hide ? "" : ""}`}>
-          <Button action={() => setHide(!hide)}>
-            {hide ? "show" : "hide"}
+        <div className={`${hide ? styles.showFormPanel : styles.hideFormPanel}`}>
+          <Button className={`${hide ? styles.showButton : styles.hideButton}`} action={() => setHide(!hide)}>
+            {hide ? "^" : "X"}
           </Button>
         </div>
       </div>

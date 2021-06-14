@@ -8,7 +8,7 @@
     bottom: 0;
     // left: 50%;
     // transform: translate(-50%, 0);
-    transition: 250ms;
+    transition: 700ms;
     width: 100vw;
 }
 
@@ -36,7 +36,7 @@
 
 .numberName {
     color: #000000dd;
-    font-size: 1.4em;
+    font-size: 1.3em;
 }
 
 .numberInput {
@@ -44,9 +44,10 @@
 }
 
 .numberLabel {
-    color: #000000dd;
+    color: #000000aa;
     // background-color: green;
-    font-size:1.2em;
+    font-size: 1.3em;
+    font-weight: 300;
 }
 
 .numberContainer:first-child {
@@ -64,7 +65,6 @@
 }
 
 .numberContainer:last-child {
-    // background-color: darkorange;
     // padding: 1.8rem;
     // border-left: 1px solid hsl(255, 90%, 80%, 70%);
     // border-right: 1px solid hsl(255, 90%, 80%, 70%);
@@ -98,12 +98,17 @@ input[type=number] {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
+    background-color: #00000005;
+    border-radius: 1.6rem;
+    padding: 0.4rem;
+    box-shadow: 0.1rem 0.1rem 0.4rem #00000022;
 }
 
 @media (min-width: 992px) {
     .inputForm {
         display: flex;
         flex-direction: row;
+        margin-right: 1.6rem;
     }
 }
 
@@ -111,5 +116,54 @@ input[type=number] {
     .inputForm {
         // display: flex;
         // flex-direction: column;
+    }
+}
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.showFormPanel {
+    position: absolute;
+    bottom: 16px;
+    animation: pop-in 750ms 1;
+}
+
+.hideFormPanel {
+    // background-color: red;
+}
+
+.showButton {
+    background-color: hsl(225, 70%, 50%);
+    border-color: hsl(225, 70%, 55%);
+    font-size: 28px;
+}
+
+.hideButton {
+    background-color: hsl(355, 70%, 60%);
+    border-color: hsl(355, 50%, 50%);    
+    font-size: 18px;
+}
+
+.hideButton, .showButton {
+    width: 36px;
+    height: 36px;
+    border-radius: 42px;
+    color: white;
+    font-weight: bold;
+    border-style: solid;
+    border-width: 2px;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: 500ms;
+    &:hover {
+        opacity: 1;
     }
 }
