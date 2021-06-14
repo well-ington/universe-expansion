@@ -92,6 +92,7 @@ input[type=number] {
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.427);
     border-width: 1px;
+    font-size: 1.4rem;
 }
 .inputForm {
     display: flex;
@@ -104,18 +105,25 @@ input[type=number] {
     box-shadow: 0.1rem 0.1rem 0.4rem #00000022;
 }
 
-@media (min-width: 851px) {
+@media (min-width: 450px) {
     .inputForm {
         display: flex;
         flex-direction: row;
         margin-right: 1.6rem;
+        justify-content: center;
     }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 449px) {
     .inputForm {
         display: flex;
         flex-direction: column;
+    }
+
+    .hideable {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
     }
 }
 @keyframes pop-in {

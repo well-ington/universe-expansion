@@ -1,6 +1,7 @@
 import React from "react";
 import ParametersForm from "./components/parameters-form/parameters-form";
 import UniverseDisplay from "./components/universe-display/universe-display";
+import styles from "./index.scss";
 
 const getDefaultValues = () => ({
     initialTime: 0,
@@ -25,7 +26,7 @@ const Home: React.FC = () => {
         setUniverseParameters(getDefaultValues());        
     }
 
-    return <div>
+    return <div className={styles.bodyBackground}>
         <UniverseDisplay config={inputParam}></UniverseDisplay>
         <ParametersForm state={parameters} setState={setStateHandler} submit={() => setInputParam(parameters)} reset={getDefaultValuesHandler}></ParametersForm>
     </div>
