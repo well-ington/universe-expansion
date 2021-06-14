@@ -14,7 +14,17 @@
     // background-color: hsl(255, 100%, 55%);
     transition: 250ms;
     cursor: pointer;
-    background-color: hsl(225, 70%, 50%);
-    border-color: hsl(225, 70%, 55%);
 
 }
+
+.blue {
+    background-color: hsl(225, 70%, 50%);
+    border-color: hsl(225, 70%, 55%);
+}
+
+.orange {
+    background-color: hsl(355, 70%, 60%);
+    border-color: hsl(355, 50%, 50%);    
+}
+
+

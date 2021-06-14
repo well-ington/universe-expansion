@@ -6,7 +6,8 @@ const ParametersForm: React.FC<{
   setState: (value: number, key: string) => void;
   state;
   submit: () => void;
-}> = ({ setState, state, submit }) => {
+  reset: () => void;
+}> = ({ setState, state, submit, reset }) => {
   const [hide, setHide] = React.useState(false);
 
   const densityParameters = [
@@ -55,8 +56,9 @@ const ParametersForm: React.FC<{
           })}          
           </div>
           <div className={styles.buttonContainer}>              
-              <Button action={submit}>Calcular</Button>
-              </div>
+              <Button type="blue" action={submit}>Calcular</Button>
+              <Button type="orange" action={reset}>Reiniciar</Button>
+          </div>
         </div>
 
         <div className={`${hide ? styles.showFormPanel : styles.hideFormPanel}`}>

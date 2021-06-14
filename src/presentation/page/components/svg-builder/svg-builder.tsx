@@ -51,7 +51,7 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
     timeMap.set("time", prop.time);
     const lastTime = prop.time[prop.time.length - 1];
 
-    const reducedTimeMap = mapSampleReducer(timeMap, 10);
+    const reducedTimeMap = mapSampleReducer(timeMap, Math.floor(window.innerWidth / 300));
     console.log(reducedTimeMap, prop.time, );
 
     return <svg viewBox={`0 0 ${window.innerWidth} ${polygonSectionHeight * 2.1}`}>
@@ -74,15 +74,15 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
 
         {
             reducedTimeMap.get("time").map(pos => <line 
-                x1={window.innerWidth * pos / lastTime} 
-                x2={window.innerWidth * pos / lastTime} 
+                x1={Math.max(Math.min(window.innerWidth * pos / lastTime, window.innerWidth - 100), 1)} 
+                x2={Math.max(Math.min(window.innerWidth * pos / lastTime, window.innerWidth - 100), 1)} 
                 y1={polygonSectionHeight} 
                 y2={polygonSectionHeight * 2} stroke-width={2} stroke="hsl(155, 50%, 50%)"></line>)
         }
 
         {
-            reducedTimeMap.get("time").map(pos => <text x={window.innerWidth * pos / lastTime} y={(polygonSectionHeight * 2) + 16}>
-                {(pos/1000).toFixed(3)} {pos > 2000 ? "bilhões" : "bilhão"}
+            reducedTimeMap.get("time").map(pos => <text x={Math.max(Math.min(window.innerWidth * pos / lastTime, window.innerWidth - 100), 8)} y={(polygonSectionHeight * 2) + 16}>
+                {pos ? `${Number.parseFloat((pos/1000).toFixed(3))} ${pos > 2000 ? "bilhões" : "bilhão"}` : "Início (0 anos)"}
             </text>)
         }
         
