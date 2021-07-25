@@ -17,9 +17,24 @@ const Home: React.FC = () => {
     const [parameters, setUniverseParameters] = React.useState(getDefaultValues());
     
     const [inputParam, setInputParam] = React.useState(parameters);
+    const detectDensityPattern = new RegExp(/Density/);
 
     const setStateHandler = (value: number, key: string) => {
-        setUniverseParameters((prevState) => ({...prevState, [key]: value}));
+
+        if(key === "metricDensity") {
+            
+            
+            setUniverseParameters((prevState) => ({...prevState, [key]: value}));
+        } else if (detectDensityPattern.test(key)) {
+            // const valueVariation =
+            const entries = Object.keys(parameters).filter(item => detectDensityPattern.test(item));
+
+            
+
+            setUniverseParameters((prevState) => ({...prevState, [key]: value}));
+        } else {
+            setUniverseParameters((prevState) => ({...prevState, [key]: value}));
+        }        
     }
     
     const getDefaultValuesHandler = () => {

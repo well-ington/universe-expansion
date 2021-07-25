@@ -16,7 +16,7 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
     const buildUniverseProportionArray = () => {
         const resultingArray = [];
         for (let i = 0; i < Math.floor(polygonSectionHeight/universeSizeOffset); i++) {
-            resultingArray.push(universeSizeOffset * (i+1));
+            // resultingArray.push(universeSizeOffset * (i+1));
         }
         if(resultingArray.length < 2) {
             const slicedUniverseSize = polygonSectionHeight / 4;
@@ -31,7 +31,8 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
     }
     const lineArray = React.useMemo(() => buildUniverseProportionArray(), [polygonSectionHeight, universeSizeOffset]);
 
-    const proportionComponentConstructor = () => lineArray.map((pos) => <text style={{font: "10px sans-serif"}} fill="white" y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{Math.floor((pos/universeSizeOffset) * 100)}% do tamanho do nosso Universo hoje</text>);
+    // const proportionComponentConstructor = () => lineArray.map((pos, index) => <text style={{font: "10px sans-serif"}} fill="white" y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{Math.floor((pos/universeSizeOffset) * 100)}% do tamanho do nosso Universo hoje</text>);
+    const proportionComponentConstructor = () => lineArray.map((pos, index) => <text style={{font: "10px sans-serif"}} fill="white" y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{(1 + index) * (100/4)}% do tamanho do nosso Universo hoje</text>);
 
     const [memoTextLineArray, updateMemoTextLineArray] = React.useState(proportionComponentConstructor());
 
@@ -51,7 +52,11 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
     timeMap.set("time", prop.time);
     const lastTime = prop.time[prop.time.length - 1];
 
-    const reducedTimeMap = mapSampleReducer(timeMap, Math.floor(window.innerWidth / 300));
+    const pixelsPerTime = 250
+
+    const numberOfItens = Math.floor(window.innerWidth / pixelsPerTime)
+
+    const reducedTimeMap = mapSampleReducer(timeMap, numberOfItens);
 
     const timeMapArray = Array.from(new Set([...reducedTimeMap.get("time"), prop.time[prop.time.length - 1]]))
     // console.log(reducedTimeMap, prop.time, );
@@ -61,7 +66,8 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
             <linearGradient id="evolutionGradient">
             {
             expansionProfile.map(
-                (profile, index) => <stop key={"color" + index} offset={`${(profile/calculatedTime) * 100}%`} stopColor={bgColors[index]} />)}
+                (profile, index) => <stop key={"color" + index} 
+                offset={`${(profile/calculatedTime) * 100}%`} stopColor={bgColors[index]} />)}
             </linearGradient>
             
         </defs>
@@ -84,8 +90,8 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
         }
 
         {
-            timeMapArray.map(pos => <text fill="hsl(50, 100%, 75%)" style={{font: "13px sans-serif"}} x={Math.max(Math.min(window.innerWidth * pos / lastTime, window.innerWidth - 100), 8)} y={(polygonSectionHeight * 2) + 16}>
-                {pos ? `${Number.parseFloat((pos/1000).toFixed(3))} ${pos > 2000 ? "bilhões" : "bilhão"}` : "Início (0 anos)"}
+            timeMapArray.map((pos, index) => <text fill="hsl(50, 100%, 75%)" style={{font: "13px sans-serif"}} x={Math.max(Math.min(window.innerWidth * pos / lastTime, window.innerWidth - 100), 8)} y={(polygonSectionHeight * 2) + 16}>
+                {pos ? `${Number.parseFloat((index * (13500/numberOfItens)/1000).toFixed(3))} ${pos > 2000 ? "bilhões" : "bilhão"}` : "Início (0 anos)"}
             </text>)
         }
         

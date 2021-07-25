@@ -7,8 +7,21 @@ const PolygonBuilder: React.FC<{time: number[], scale: number[], width?: number,
     scale.forEach(pos => pos > biggestPoint ? biggestPoint = pos : null);
     const returnPolygonCoordinates = (): string => {
         let pathString = "";
-        pathString += (scale.map((point, index) => `${(width * (time[index]/time[time.length - 1]))},${(height * (biggestPoint - point)/biggestPoint)}`)).join(" ");
-        pathString += " " + (scale.reverse().map((point, index) => `${(width * (time[time.length - index - 1]/time[time.length - 1]))},${(height * (point + biggestPoint)/biggestPoint)}`)).join(" ");
+
+        //relative time graphic
+        // pathString += (scale.map((point, index) => `${(width * (time[index]/time[time.length - 1]))},${(height * (biggestPoint - point)/biggestPoint)}`)).join(" ");
+        // pathString += " " + (scale.reverse().map((point, index) => `${(width * (time[time.length - index - 1]/time[time.length - 1]))},${(height * (point + biggestPoint)/biggestPoint)}`)).join(" ");
+
+        //absolute time graphic
+        // const firstLineFactory = (point, index) => `${(width * (time[index]/13500))},${(height * (biggestPoint - point)/biggestPoint)}`
+        const firstLineFactory = (point, index) => `${(width * (time[index]/13500))},${(height * (1 - point))}`
+        // const secondLineFactory = (point, index) => `${(width * (time[time.length - index - 1]/13500))},${(height * (point + biggestPoint)/biggestPoint)}`
+        const secondLineFactory = (point, index) => `${(width * (time[time.length - index - 1]/13500))},${(height * (point + 1))}`
+
+        pathString += (scale.map(firstLineFactory)).join(" ");
+
+        pathString += " " + (scale.reverse().map(secondLineFactory)).join(" ");
+
         return pathString;
     }
 
