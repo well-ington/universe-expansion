@@ -15,7 +15,7 @@ const ParametersForm: React.FC<{
     { name: "Matter density", namePTBR: "de matéria", label: "unidade relativa",  step: 0.01 },
     { name: "Dark energy density", namePTBR: "de energia escura", label: "unidade relativa",  step: 0.01 },
     { name: "Metric density", namePTBR: "métrica", label: "unidade relativa",  step: 0.001 },
-    { name: "Final time", namePTBR: "Tempo final", label: "em bilhões de anos",  step: 0.25 },
+    { name: "Final time", namePTBR: "Tempo final", label: "em bilhões de anos",  step: 0.25, max: 13.5 },
   ];
   return (
     <div>
@@ -37,6 +37,12 @@ const ParametersForm: React.FC<{
                   step={profile.step}
                   value={state[itemKey]}
                   onChange={(event: any) => {
+                    if(profile.max) {
+                      if(profile.max < event.target.value) {
+                        setState(profile.max, itemKey)
+                        return
+                      }
+                    }
                       if (event.target.value > 0) {
                         setState(Number(event.target.value), itemKey)
                       }
