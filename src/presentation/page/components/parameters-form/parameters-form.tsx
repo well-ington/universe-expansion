@@ -118,6 +118,8 @@ const ParametersForm: React.FC<{
                             const newMatterDensity = oldMatterDensity - (matterProportion * deltaRadiation)
                             const newDarkEnergyDensity = oldDarkEnergyDensity - (darkEnergyMatterProportion * deltaRadiation)
 
+                            if(newMatterDensity < 0 || newDarkEnergyDensity < 0) return 
+
                             setState(newMatterDensity, matterDensityKey)
                             setState(newDarkEnergyDensity, darkEnergyDensityKey)
 
@@ -132,6 +134,8 @@ const ParametersForm: React.FC<{
 
                             const newRadiationDensity = oldRadiationDensity - (radiationProportion * deltaMatter)
                             const newDarkEnergyMatterDensity = oldDarkEnergyDensity - (darkEnergyRadiationProportion * deltaMatter)
+
+                            if(newRadiationDensity < 0 || newDarkEnergyMatterDensity < 0) return
 
                             setState(newRadiationDensity, radiationDensityKey)
                             setState(newDarkEnergyMatterDensity, darkEnergyDensityKey)
@@ -148,6 +152,10 @@ const ParametersForm: React.FC<{
 
                             const newRadDensity = oldRadiationDensity - (radiationDarkEnergyPropotion * deltaDarkEnergy)
                             const newMatDensity = oldMatterDensity - (matterRadiationProportion * deltaDarkEnergy)
+
+                            if(newRadDensity < 0 || newMatDensity < 0) {
+                              return
+                            }
 
                             setState(newRadDensity, radiationDensityKey)
                             setState(newMatDensity, matterDensityKey)
