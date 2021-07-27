@@ -50,7 +50,7 @@ const ParametersForm: React.FC<{
 
   return (
     <div>
-      <div className={`${styles.container}`}>
+      <div className={`${styles.container} ${hide ? '' : styles.blackContainer}`}>
         <div
           className={`${hide ? styles.hide : styles.show} ${styles.hideable}`}
         >
@@ -83,7 +83,6 @@ const ParametersForm: React.FC<{
                         }
                       }
                       if (event.target.value > 0) {
-                       
                         const metricDensityKey = getObjectName(densityParameters[3].name)
                         const radiationDensityKey = getObjectName(densityParameters[0].name)
                         const matterDensityKey = getObjectName(densityParameters[1].name)

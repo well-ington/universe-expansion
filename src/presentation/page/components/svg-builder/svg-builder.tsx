@@ -4,7 +4,15 @@ import PolygonBuilder from "../polygon-builder/polygon-builder";
 
 const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, scale }) => {
     const bgColors = ["hsl(75, 90%, 50%)", "hsl(180, 90%, 50%)", "hsl(285, 90%, 91%, 20%)", "hsl(285, 90%, 91%, 20%)", "hsl(285, 90%, 50%)",  "hsl(255, 90%, 50%)", "blue"];
-    const expansionProfile = [0, 0.375, 375, 4000, 6700, 98000, 135000];
+
+    const colorStageName = [
+        "Domínio da radiação",
+        "Radiação de fundo do Universo",
+        "Idade das trevas",
+        "Domínio da matéria",
+        "Domínio da energia escura"
+    ]
+    const expansionProfile = [0, 0.4, 100, 375, 6700, 98000, 135000];
     const calculatedTime = prop.time[prop.time.length - 1];
     const polygonSectionHeight = window.innerHeight / 3;
     const universeProportions = (1/prop.scale[prop.scale.length - 1]);
@@ -32,8 +40,8 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
     const lineArray = React.useMemo(() => buildUniverseProportionArray(), [polygonSectionHeight, universeSizeOffset]);
 
     // const proportionComponentConstructor = () => lineArray.map((pos, index) => <text style={{font: "10px sans-serif"}} fill="white" y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{Math.floor((pos/universeSizeOffset) * 100)}% do tamanho do nosso Universo hoje</text>);
-    const proportionComponentConstructor = () => lineArray.map((pos, index) => <text style={{font: "10px sans-serif"}} fill="white" y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 2 } x={12}>{(1 + index) * (100/4)}% do tamanho do nosso Universo hoje</text>);
-
+    const proportionComponentConstructor = () => lineArray.map((pos, index) => <text style={{font: "10px sans-serif"}} fill="white" y={pos > (polygonSectionHeight - 16) ? polygonSectionHeight - pos + 12 : polygonSectionHeight - pos - 6 } x={12}>{(1 + index) * (100/4)}% do tamanho do nosso Universo hoje</text>);
+    
     const [memoTextLineArray, updateMemoTextLineArray] = React.useState(proportionComponentConstructor());
 
     React.useEffect(() => {
@@ -60,6 +68,12 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
 
     const timeMapArray = Array.from(new Set([...reducedTimeMap.get("time"), prop.time[prop.time.length - 1]]))
     // console.log(reducedTimeMap, prop.time, );
+
+    const colorSet = Array.from(new Set(bgColors))
+    colorSet.pop()
+
+    // console.log(colorSet.length, colorStageName.length, 'test')
+
 
     return <svg viewBox={`0 0 ${window.innerWidth} ${polygonSectionHeight * 2.1}`}>
         <defs>
@@ -90,10 +104,12 @@ const SVGBuilder: React.FC<{time: number[], scale: number[]}> = (prop: { time, s
         }
 
         {
-            timeMapArray.map((pos, index) => <text fill="hsl(50, 100%, 75%)" style={{font: "13px sans-serif"}} x={Math.max(Math.min(window.innerWidth * pos / lastTime, window.innerWidth - 100), 8)} y={(polygonSectionHeight * 2) + 16}>
+            timeMapArray.map((pos, index) => <text fill="hsl(50, 100%, 75%)" style={{font: "13px sans-serif"}} 
+            x={Math.max(Math.min(window.innerWidth * pos / lastTime, window.innerWidth - 100), 8)} y={(polygonSectionHeight * 2) + 16}>
                 {pos ? `${Number.parseFloat((index * (13500/numberOfItens)/1000).toFixed(3))} ${pos > 2000 ? "bilhões" : "bilhão"}` : "Início (0 anos)"}
             </text>)
         }
+
         
     </svg>
 }

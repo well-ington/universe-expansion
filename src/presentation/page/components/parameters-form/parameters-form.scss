@@ -8,8 +8,15 @@
     bottom: 0;
     // left: 50%;
     // transform: translate(-50%, 0);
-    transition: 700ms;
     width: 100vw;
+    transition: 500ms;
+    padding-top: 16px;
+    height: 0;
+}
+
+.blackContainer {
+    background-color: #000000FD;
+    height: unset;
 }
 
 .hide {
